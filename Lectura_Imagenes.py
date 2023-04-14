@@ -95,18 +95,19 @@ def H_E(img_matched):
 #path_b="C:/Trabajo_de_Grado/Segmentation_Feacture_Extraction/Segmentation_Feacture_Extraction/ICIAR2018_BACH_Challenge/ICIAR2018_BACH_Challenge/Photos/Benign/Prueba_b/*.png"
 #path_m="C:/Trabajo_de_Grado/Segmentation_Feacture_Extraction/Segmentation_Feacture_Extraction/ICIAR2018_BACH_Challenge/ICIAR2018_BACH_Challenge/Photos/Invasive/Prueba_m/*.tif"
 
+
 #path_b="C:/Trabajo_de_Grado/BreaKHis_v1-20230414T153138Z-002/BreaKHis_v1/histology_slides/breast/benign/Imagenes_Muestra_B/*.png"
-path_m="C:\Trabajo_de_Grado\BreaKHis_v1-20230414T153138Z-002\BreaKHis_v1\histology_slides\breast\malignant\Imagenes_Muestra_M/*.png"
+path_m="C:/Trabajo_de_Grado/BreaKHis_v1-20230414T153138Z-002/BreaKHis_v1/histology_slides/breast/malignant/Imagenes_Muestra_M/*.png"
 
 
 for file in glob.glob(path_m):
     
     img_rgb=cv2.imread(file)
     
-    reference=cv2.imread("referencia.png")
+    reference=cv2.imread("Referencia5.png")
     
     #Calculo del histograma 
-    """
+    
     channels=cv2.split(img_rgb)
     
     colors=('b','g','r')
@@ -122,8 +123,6 @@ for file in glob.glob(path_m):
     plt.show()
     
     
-    """
-    
     
     #CLAHE
     img_lab = cv2.cvtColor(img_rgb,cv2.COLOR_RGB2LAB)
@@ -135,6 +134,7 @@ for file in glob.glob(path_m):
     img_lab[:,:,0] = clahe.apply( img_lab[:,:,0])
     
     img_rgb_clahe= cv2.cvtColor(img_lab, cv2.COLOR_LAB2RGB)
+    
     
     
     """
@@ -161,6 +161,28 @@ for file in glob.glob(path_m):
     img_matched = match_histograms(img_rgb_clahe, reference ,
                            multichannel=True)
     
+    
+    
+    #Calculo del histograma 
+    channels=cv2.split(img_matched)
+    
+    colors=('b','g','r')
+    
+    for(channel,color) in zip(channels,colors):
+        
+        hist = cv2.calcHist([channel], [0], None, [256], [0, 256])
+        plt.plot(hist, color=color )
+        
+
+    plt.xlabel('intensidad de iluminacion_clahe')
+    plt.ylabel('cantidad de pixeles')
+    plt.show()
+    
+    
+    
+    
+    
+    
     img_hematoxilina=H_E(img_matched)
     
 
@@ -169,18 +191,19 @@ for file in glob.glob(path_m):
     cv2.waitKey(2000)
     cv2.destroyAllWindows()  
     
-    """
+    
     cv2.imshow("img_clahe",img_rgb_clahe)
     cv2.waitKey(2000)
     cv2.destroyAllWindows() 
     
+
     
     
     cv2.imshow("img_matched",img_matched)
     cv2.waitKey(2000)
     cv2.destroyAllWindows()  
     
-    """
+    
     
     cv2.imshow("img_Hematoxilina",img_hematoxilina)
     cv2.waitKey(2000)
@@ -201,13 +224,10 @@ for file in glob.glob(path_m):
     plt.ylabel('cantidad de pixeles')
     plt.show()
     
-    cv2.imshow("img_matched",  matched)
-    #cv2.imshow("img",  img_rgb)
-    cv2.waitKey(2000)
-    cv2.destroyAllWindows()   
+     """ 
     
     
-    """
+    
     
     
     
