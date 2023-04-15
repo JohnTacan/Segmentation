@@ -96,8 +96,8 @@ def H_E(img_matched):
 #path_m="C:/Trabajo_de_Grado/Segmentation_Feacture_Extraction/Segmentation_Feacture_Extraction/ICIAR2018_BACH_Challenge/ICIAR2018_BACH_Challenge/Photos/Invasive/Prueba_m/*.tif"
 
 
-#path_b="C:/Trabajo_de_Grado/BreaKHis_v1-20230414T153138Z-002/BreaKHis_v1/histology_slides/breast/benign/Imagenes_Muestra_B/*.png"
-path_m="C:/Trabajo_de_Grado/BreaKHis_v1-20230414T153138Z-002/BreaKHis_v1/histology_slides/breast/malignant/Imagenes_Muestra_M/*.png"
+#path_b="C:/Trabajo_de_Grado/BreaKHis_v1/BreaKHis_v1/histology_slides/breast/benign/Imagenes_Muestra_B/*.png"
+path_m="C:/Trabajo_de_Grado/BreaKHis_v1/BreaKHis_v1/histology_slides/breast/malignant/Imagenes_Muestra_M/*.png"
 
 
 for file in glob.glob(path_m):
@@ -127,7 +127,6 @@ for file in glob.glob(path_m):
     #CLAHE
     img_lab = cv2.cvtColor(img_rgb,cv2.COLOR_RGB2LAB)
     
-
     
     clahe=cv2.createCLAHE(clipLimit=3.0,tileGridSize=(8,8))
 
@@ -137,7 +136,7 @@ for file in glob.glob(path_m):
     
     
     
-    """
+    
     #Calculo del histograma 
     channels=cv2.split(img_rgb_clahe)
     
@@ -153,8 +152,8 @@ for file in glob.glob(path_m):
     plt.ylabel('cantidad de pixeles')
     plt.show()
      
-
-    """
+    
+    
     
     #Matching histogram
     
@@ -162,7 +161,7 @@ for file in glob.glob(path_m):
                            multichannel=True)
     
     
-    
+    """
     #Calculo del histograma 
     channels=cv2.split(img_matched)
     
@@ -179,8 +178,7 @@ for file in glob.glob(path_m):
     plt.show()
     
     
-    
-    
+    """
     
     
     img_hematoxilina=H_E(img_matched)
@@ -197,8 +195,7 @@ for file in glob.glob(path_m):
     cv2.destroyAllWindows() 
     
 
-    
-    
+
     cv2.imshow("img_matched",img_matched)
     cv2.waitKey(2000)
     cv2.destroyAllWindows()  
